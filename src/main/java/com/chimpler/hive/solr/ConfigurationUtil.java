@@ -5,17 +5,22 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.mapred.JobConf;
 
 import com.google.common.collect.ImmutableSet;
 
 public class ConfigurationUtil {
 	public static final String URL = "solr.url";
+	public static final String TYPE_MAPPING = "solr.type.mapping";
 	public static final String COLUMN_MAPPING = "solr.column.mapping";
 	public static final String BUFFER_IN_ROWS = "solr.buffer.input.rows";
 	public static final String BUFFER_OUT_ROWS = "solr.buffer.output.rows";
 	
 	public static final Set<String> ALL_PROPERTIES = ImmutableSet.of(URL, COLUMN_MAPPING,
-														BUFFER_IN_ROWS, BUFFER_OUT_ROWS);
+														BUFFER_IN_ROWS, BUFFER_OUT_ROWS,TYPE_MAPPING);
+	public final static String getTypeMapping(Configuration conf) {
+		return conf.get(TYPE_MAPPING);
+	}
 
 	public final static String getColumnMapping(Configuration conf) {
 		return conf.get(COLUMN_MAPPING);
@@ -33,6 +38,15 @@ public class ConfigurationUtil {
 	public final static int getNumOutputBufferRows(Configuration conf) {
 		String value = conf.get(BUFFER_OUT_ROWS, "-1");
 		return Integer.parseInt(value);
+	}
+	
+	public static void copySolrProperties(Properties from, JobConf to) {
+    	for (String key : ALL_PROPERTIES) {
+            String value = from.getProperty(key);
+            if (value != null) {
+            	to.set(key, value);
+            }
+    	}
 	}
 
     public static void copySolrProperties(Properties from,

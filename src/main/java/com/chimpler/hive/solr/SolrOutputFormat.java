@@ -27,7 +27,7 @@ HiveOutputFormat<NullWritable, Row>{
                       Properties tableProperties,
                       Progressable progress) throws IOException {
                 return new SolrWriter(ConfigurationUtil.getUrl(conf),
-                					  ConfigurationUtil.getNumOutputBufferRows(conf));
+                					  ConfigurationUtil.getNumOutputBufferRows(conf), ConfigurationUtil.getTypeMapping(conf));
 
         }
 

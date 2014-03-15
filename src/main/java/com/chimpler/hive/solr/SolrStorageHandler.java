@@ -1,7 +1,5 @@
 package com.chimpler.hive.solr;
 
-import com.chimpler.hive.solr.ConfigurationUtil;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -14,9 +12,11 @@ import org.apache.hadoop.hive.metastore.api.Table;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.metadata.HiveStorageHandler;
 import org.apache.hadoop.hive.ql.plan.TableDesc;
+import org.apache.hadoop.hive.ql.security.authorization.DefaultHiveAuthorizationProvider;
 import org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider;
 import org.apache.hadoop.hive.serde2.SerDe;
 import org.apache.hadoop.mapred.InputFormat;
+import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.OutputFormat;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
@@ -111,5 +111,29 @@ public class SolrStorageHandler implements HiveStorageHandler {
 			// nothing to do...
 		}
 
+	}
+
+	@Override
+	public void configureInputJobProperties(TableDesc tableDescription, Map<String, String> jobProperties) {
+		Properties properties = tableDescription.getProperties();
+		ConfigurationUtil.copySolrProperties(properties, jobProperties);
+	}
+
+	@Override
+	public void configureJobConf(TableDesc tableDescription, JobConf config) {
+		Properties properties = tableDescription.getProperties();
+		ConfigurationUtil.copySolrProperties(properties, config);
+	}
+
+	@Override
+	public void configureOutputJobProperties(TableDesc tableDescription, Map<String, String> jobProperties) {
+		Properties properties = tableDescription.getProperties();
+		ConfigurationUtil.copySolrProperties(properties, jobProperties);
+	}
+
+	@Override
+	public HiveAuthorizationProvider getAuthorizationProvider()
+			throws HiveException {
+		return new DefaultHiveAuthorizationProvider();
 	}
 }

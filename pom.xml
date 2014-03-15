@@ -71,14 +71,14 @@
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-metastore</artifactId>
-			<version>0.7.1-SNAPSHOT</version>
+			<version>0.12.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-serde</artifactId>
-			<version>0.7.1-SNAPSHOT</version>
+			<version>0.12.0</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
@@ -98,13 +98,19 @@
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-exec</artifactId>
-			<version>0.7.1-SNAPSHOT</version>
+			<version>0.12.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.solr</groupId>
 			<artifactId>solr-solrj</artifactId>
 			<version>4.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+			<version>1.2.1</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
